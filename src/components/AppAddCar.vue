@@ -2,6 +2,12 @@
   <div>
     <h1>Add a new Car</h1>
     <br>
+    <div v-if="errors.length > 0">
+      <p>Please fix all the error(s) first:</p>
+      <ul>
+        <li class="list-group-item list-group-item-danger" v-for="(error, index) in errors" :key="index">{{error}}</li>
+      </ul>
+    </div>
     <div class="form-row">
       <input type="text" class="form-control col-sm-3 m-1" placeholder="Brand" v-model="car.brand">
       <input type="text" class="form-control col-sm-3 m-1" placeholder="Model" v-model="car.model">
@@ -61,13 +67,15 @@ export default {
         numberOfDoors: 0,
         isAutomatic: false,
         engine: 'diesel'
-      }
+      },
+      errors: []
     }
   },
   methods: {
     submit() {
-      console.log(this.car);
-      add(this.car).then(this.$router.push('cars'));
+      if(this.validateForm()) {
+        add(this.car).then(this.$router.push('cars'));
+      }
     },
     reset() {
       this.car = {
@@ -78,13 +86,40 @@ export default {
         numberOfDoors: 0,
         isAutomatic: false,
         engine: 'diesel'
-      }
+      },
+      this.errors = []
     },
     preview() {
       let carStr = this.car.brand + ' ' + this.car.model + ' - ' + this.car.year + '\n' +
         this.car.maxSpeed + ' km/h, ' + this.car.numberOfDoors + ' doors, ' + 
         this.car.engine + ' engine\n' + (this.car.isAutomatic ? 'automatic' : 'manual') + ' transmition';
       alert(carStr);
+    },
+    validateForm() {
+      this.errors = [];
+
+      if(this.car.brand.length < 2) {
+        this.errors.push('Field "Brand" has to be at least 2 characters long.' );
+      }
+
+      if(this.car.model.length < 2) {
+        this.errors.push('Field "Model" has to be at least 2 characters long.' );
+      }
+
+      if(this.car.year == 0) {
+        this.errors.push('Field "Year" is required.' );
+      }
+
+      if(this.car.numberOfDoors == 0) {
+        this.errors.push('Field "Nr. of doors" is required.' );
+      }
+
+      console.log(this.errors);
+
+      if(this.errors.length == 0) {
+        return true;
+      }
+      return false;
     }
   }
 }
