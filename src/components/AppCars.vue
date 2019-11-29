@@ -39,7 +39,7 @@ export default {
       cars: []
     }
   },
-  mounted() {
+  created() {
     getAll().then(cars => {
       this.cars = cars;
     });
