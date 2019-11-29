@@ -42,6 +42,7 @@
         <label for="automaticcheckbox" class="form-check-label">Automatic</label>
       </div>
     <button class="btn btn-primary ml-2" @click="submit">Submit</button>
+    <button class="btn btn-outline-danger ml-2" @click="reset">Reset</button>
     </div>
   </div>
 </template>
@@ -66,6 +67,17 @@ export default {
     submit() {
       console.log(this.car);
       add(this.car).then(this.$router.push('cars'));
+    },
+    reset() {
+      this.car = {
+        brand: '',
+        model: '',
+        year: 0,
+        maxSpeed: 0,
+        numberOfDoors: 0,
+        isAutomatic: false,
+        engine: 'diesel'
+      }
     }
   }
 }
