@@ -41,9 +41,10 @@
         <input type="checkbox" class="form-check-input" id="automaticcheckbox" v-model="car.isAutomatic">
         <label for="automaticcheckbox" class="form-check-label">Automatic</label>
       </div>
+    </div>
     <button class="btn btn-primary ml-2" @click="submit">Submit</button>
     <button class="btn btn-outline-danger ml-2" @click="reset">Reset</button>
-    </div>
+    <button class="btn btn-outline-secondary ml-2" @click="preview">Preview</button>
   </div>
 </template>
 
@@ -78,6 +79,12 @@ export default {
         isAutomatic: false,
         engine: 'diesel'
       }
+    },
+    preview() {
+      let carStr = this.car.brand + ' ' + this.car.model + ' - ' + this.car.year + '\n' +
+        this.car.maxSpeed + ' km/h, ' + this.car.numberOfDoors + ' doors, ' + 
+        this.car.engine + ' engine\n' + (this.car.isAutomatic ? 'automatic' : 'manual') + ' transmition';
+      alert(carStr);
     }
   }
 }
