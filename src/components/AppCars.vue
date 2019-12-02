@@ -49,7 +49,9 @@ export default {
   },
   methods: {
     del(id) {
-      deleteCar(id).then(this.$router.go());
+      if(confirm("Are you sure?")){
+        deleteCar(id).then(this.$router.go());
+      }
     }
   }
 }
