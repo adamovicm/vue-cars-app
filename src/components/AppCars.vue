@@ -25,6 +25,8 @@
           <td>{{car.isAutomatic ? 'Automatic' : 'Manual'}}</td>
           <td>{{car.engine}}</td>
           <td>{{car.numberOfDoors}}</td>
+          <!-- <td><button class="btn btn-primarty">Edit</button></td> -->
+          <td><router-link :to="`edit/${car.id}`">Edit</router-link></td>
         </tr>
       </tbody>
     </table>
