@@ -15,5 +15,10 @@ export const routes = [
         path: '/add',
         name: 'add',
         component: AppAddCar
+    },
+    {
+        path: '/edit/:id',
+        name: 'edit',
+        component: AppAddCar
     }
 ]

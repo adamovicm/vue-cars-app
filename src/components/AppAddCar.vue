@@ -23,7 +23,7 @@
       <input type="number" class="form-control col-sm-2 m-1" id="nrofdoors" v-model="car.numberOfDoors">
     </div>
     <div class="form-row">
-      <div class="col-sm-1 m-1">
+      <div class="col-sm-2 m-1">
         <div class="custom-control custom-radio">
           <input type="radio" class="custom-control-input" id="enginediesel" v-model="car.engine" value="diesel">
           <label for="enginediesel" class="custom-control-label">Diesel</label>
@@ -33,7 +33,7 @@
           <label for="enginepetrol" class="custom-control-label">Petrol</label>
         </div>
       </div>
-      <div class="col-sm-1 m-1">
+      <div class="col-sm-2 m-1">
         <div class="custom-control custom-radio">
           <input type="radio" class="custom-control-input" id="enginehybrid" v-model="car.engine" value="hybrid">
           <label for="enginehybrid" class="custom-control-label">Hybrid</label>
@@ -56,6 +56,8 @@
 
 <script>
 import {add} from '../services/CarsService.js';
+import {get} from '../services/CarsService.js';
+import {edit} from '../services/CarsService.js';
 export default {
   data() {
     return {
@@ -74,7 +76,11 @@ export default {
   methods: {
     submit() {
       if(this.validateForm()) {
-        add(this.car).then(this.$router.push('cars'));
+        if(this.$route.params.id) {
+          edit(this.car.id, this.car).then(this.$router.push('/cars'));
+        } else {
+          add(this.car).then(this.$router.push('/cars'));
+        }
       }
     },
     reset() {
@@ -114,12 +120,16 @@ export default {
         this.errors.push('Field "Nr. of doors" is required.' );
       }
 
-      console.log(this.errors);
-
       if(this.errors.length == 0) {
         return true;
       }
       return false;
+    }
+  },
+  created() {
+    if(this.$route.params.id) {
+      get(this.$route.params.id)
+        .then(car => this.car = car);
     }
   }
 }
