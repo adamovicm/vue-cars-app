@@ -120,8 +120,6 @@ export default {
         this.errors.push('Field "Nr. of doors" is required.' );
       }
 
-      console.log(this.errors);
-
       if(this.errors.length == 0) {
         return true;
       }

@@ -18,8 +18,11 @@ export function get(id) {
 }
 
 export function edit(id, car) {
-    console.log(id)
     return axios
         .put(`http://localhost:3000/api/cars/${id}`, car)
-        .then(response => console.log(response));
+}
+
+export function deleteCar(id) {
+    return axios
+        .delete(`http://localhost:3000/api/cars/${id}`)
 }
